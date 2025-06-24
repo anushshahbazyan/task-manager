@@ -1,0 +1,43 @@
+{
+    "tasks": [{
+        "taskId": "T001",
+        "title": "Fix login bug",
+        "description": "Resolve issues with login.",
+        "priority": "Low",
+        "status": "In Progress",
+        "dueDate": "2025-07-18"
+    },
+    {
+        "taskId": "T002",
+        "title": "Update user flow",
+        "description": "Review and revise user flow.",
+        "priority": "High",
+        "status": "In Progress",
+        "dueDate": "2025-08-11"
+    },
+    {
+        "taskId": "T003",
+        "title": "Design landing page",
+        "description": "Design a new landing page.",
+        "priority": "High",
+        "status": "In Progress",
+        "dueDate": "2025-07-01"
+    },
+    {
+        "taskId": "T004",
+        "title": "Write unit tests",
+        "description": "Write unit tests for recently added options.",
+        "priority": "High",
+        "status": "Done",
+        "dueDate": "2025-07-30"
+    },
+    {
+        "taskId": "T005",
+        "title": "Optimize database",
+        "description": "Optimize DB queries to enhance performance.",
+        "priority": "Low",
+        "status": "To Do",
+        "dueDate": "2025-07-08"
+    }],
+    "totalCount": 5
+}

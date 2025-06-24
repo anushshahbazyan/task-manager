@@ -1,0 +1,20 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+}
+
+.project-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.title {
+    text-align: center;
+
+    @media (width < 768px) {
+        font-size: 24px;
+    }
+}
