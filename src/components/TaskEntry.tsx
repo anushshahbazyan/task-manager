@@ -17,7 +17,7 @@ export default function TaskEntry() {
             setTask(task);
         }
         doFetching();
-    }, []);
+    }, [taskId]);
 
     useEffect(() => {
         const retrieveProject = () => {
@@ -28,19 +28,19 @@ export default function TaskEntry() {
     }, []);
 
     return (
-        <div className="container">
+        <div className="detail-container">
             { task &&
                 <>
                     <h3 className='title'>Project - {`${project?.projectName}`}</h3>
                     <h3 className='title'>Task - {`${task?.title}`}</h3>
-                    <div className="task-item">
-                        <p>Description</p>
+                    <div className="task-detail">
+                        <div className='bold-item'>Description</div>
                         <div> { task.description } </div>
-                        <p>Priority</p>
+                        <div className='bold-item'>Priority</div>
                         <div> { task.priority } </div>
-                        <p>Status</p>
+                        <div className='bold-item'>Status</div>
                         <div> { task.status } </div>
-                        <p>Due Date</p>
+                        <div className='bold-item'>Due Date</div>
                         <div> { new Date(task.dueDate).toLocaleString() } </div>
                     </div>
                 </>

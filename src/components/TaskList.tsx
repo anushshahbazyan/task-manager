@@ -28,7 +28,7 @@ export default function TaskList() {
     useEffect(() => {
         const retrieveProject = () => {
             const data = localStorage.getItem('project');
-            data ? setProject(JSON.parse(data)) : setProject(null);
+            setProject(data ? JSON.parse(data) : null);
         }
         retrieveProject();
     }, []);

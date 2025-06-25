@@ -1,4 +1,17 @@
-.task-item {
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.task-detail {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.bold-item {
+    font-weight: 600;
 }
