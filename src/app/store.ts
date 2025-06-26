@@ -1,15 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import type { Task } from '../components/TaskList';
 import tasksSlice from '../features/tasks/tasksSlice';
-
-export interface TasksState {
-    tasks: Task[],
-    status: 'idle' | 'pending' | 'succeeded' | 'failed',
-    error: string | null
-};
+import projectsSlice from '../features/projects/projectsSlice';
 
 export const store = configureStore({
     reducer: {
+        projects: projectsSlice,
         tasks: tasksSlice,
     }
 });

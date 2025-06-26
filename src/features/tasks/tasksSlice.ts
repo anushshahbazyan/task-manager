@@ -1,12 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { RootState, TasksState } from '../../app/store';
+import type { TasksState } from '../../types';
+import type { RootState } from '../../app/store';
 import { createAppAsyncThunk } from '../../app/withTypes';
 import fetchData from '../../utils/fetchData';
-import type { Task } from '../../components/TaskList';
+import type { Task } from '../../types';
 
 export const fetchTasks = createAppAsyncThunk('tasks/fetchTasks', async () => {
     const response = await fetchData('/src/resources/tasks.json');
-    return response.data;
+    return response.tasks;
 });
 
 const initialState: TasksState = {
@@ -26,13 +27,13 @@ const tasksSlice = createSlice({
         },
         taskDeleted(state, action: PayloadAction<string>) {
             const index = state.tasks.findIndex((task: Task) => task.taskId === action.payload);
-            if (index) {
+            if (index !== undefined) {
                 state.tasks.splice(index, 1);
             }
         },
         taskUpdated(state, action: PayloadAction<TaskUpdate>) {
             const { taskId, title, description, status, priority, dueDate } = action.payload;
-            const existingTask = state.tasks.find(task => task.taskId === taskId);
+            const existingTask = state.tasks.find((task: Task) => task.taskId === taskId);
             if (existingTask) {
                 existingTask.title = title;
                 existingTask.description = description;
@@ -58,15 +59,14 @@ const tasksSlice = createSlice({
       },
 });
   
-export const { taskAdded, taskUpdated } = tasksSlice.actions;
+export const { taskAdded, taskDeleted, taskUpdated } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
-
 
 export const selectAllTasks = (state: RootState) => state.tasks.tasks;
 
 export const selectTaskById = (state: RootState, taskId: string) =>
-state.tasks.tasks.find(task => task.taskId === taskId);
+    state.tasks.tasks.find(task => task.taskId === taskId);
 
 export const selectTasksStatus = (state: RootState) => state.tasks.status;
 export const selectTasksError = (state: RootState) => state.tasks.error;
