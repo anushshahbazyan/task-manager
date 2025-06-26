@@ -1,4 +1,27 @@
 .task-item {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.add {
+    background-color: royalblue;
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 140px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.actions svg {
+    cursor: pointer;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

@@ -2,8 +2,8 @@ import './TaskEntry.css';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router';
 import fetchData from "../utils/fetchData";
-import { type Project } from './ProjectList';
-import { type Task } from './TaskList';
+import type { Project, Task } from '../types';
+import TaskActions from './TaskActions';
 
 export default function TaskEntry() {
     const { taskId } = useParams();
@@ -32,7 +32,10 @@ export default function TaskEntry() {
             { task &&
                 <>
                     <h3 className='title'>Project - {`${project?.projectName}`}</h3>
-                    <h3 className='title'>Task - {`${task?.title}`}</h3>
+                    <h3 className='title'>
+                        Task - {`${task?.title}`}
+                        <TaskActions projectId={project?.projectName} taskId={task.taskId} />
+                    </h3>
                     <div className="task-detail">
                         <div className='bold-item'>Description</div>
                         <div> { task.description } </div>
@@ -41,7 +44,7 @@ export default function TaskEntry() {
                         <div className='bold-item'>Status</div>
                         <div> { task.status } </div>
                         <div className='bold-item'>Due Date</div>
-                        <div> { new Date(task.dueDate).toLocaleString() } </div>
+                        <div> { new Date(task.dueDate).toLocaleDateString() } </div>
                     </div>
                 </>
             }

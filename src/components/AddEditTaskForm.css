@@ -1,0 +1,10 @@
+.form-content {
+    width: 50vw;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+
+    @media (width < 768px) {
+        width: 100vw;
+    }
+}

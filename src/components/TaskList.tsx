@@ -1,29 +1,27 @@
 import './TaskList.css';
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
-import fetchData from "../utils/fetchData";
-import { type Project } from './ProjectList';
+import { Link, useNavigate } from "react-router";
+import { PlusIcon } from '@heroicons/react/16/solid';
 
-export type Task = {
-    taskId: string,
-    title: string,
-    description: string,
-    priority: string,
-    status: string,
-    dueDate: string,
-}
+import { fetchTasks, selectAllTasks, selectTasksError, selectTasksStatus } from '../features/tasks/tasksSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import type { Task, Project } from '../types';
+import TaskActions from './TaskActions';
+import { HydrateFallback } from './HydrateFallback';
 
 export default function TaskList() {
-    const [tasks, setTasks] = useState<Task[]>([]);
     const [project, setProject] = useState<Project | null>(null);
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const tasks = useAppSelector(selectAllTasks);
+    const taskStatus = useAppSelector(selectTasksStatus);
+    const taskError = useAppSelector(selectTasksError);
 
     useEffect(() => {
-        const doFetching = async () => {
-            const data = await fetchData('/src/resources/tasks.json');
-            setTasks(data.tasks || []);
+        if (taskStatus === 'idle') {
+            dispatch(fetchTasks());
         }
-        doFetching();
-    }, []);
+    }, [taskStatus, dispatch]);
 
     useEffect(() => {
         const retrieveProject = () => {
@@ -33,15 +31,37 @@ export default function TaskList() {
         retrieveProject();
     }, []);
 
+    const onAddTaskClicked = () => {
+        navigate('/tasks/new');
+    }
+
+    if (taskStatus === 'pending') {
+        return <HydrateFallback />;
+    }
+
+    if (taskError) {
+        return (
+            <div className='error-container'>
+                <h1>Error</h1>
+                <p>{taskError}</p>
+            </div>
+        );
+    }
+
     return (
         <div className="container">
             <h1 className='title'>{`${project?.projectName}`} Project Tasks</h1>
+            <button className='add' onClick={onAddTaskClicked}>
+                <PlusIcon width={16} height={16} color='#ffffff' />
+                <span>Add Task</span>
+            </button>
             <div className="task-item">
                 <h2>Task Name</h2>
                 <h2>Description</h2>
                 <h2>Priority</h2>
                 <h2>Status</h2>
                 <h2>Due Date</h2>
+                <h2>Actions</h2>
             </div>
             { tasks.map((task: Task, index: number) => {
                 return (
@@ -52,7 +72,8 @@ export default function TaskList() {
                         <div> { task.description } </div>
                         <div> { task.priority } </div>
                         <div> { task.status } </div>
-                        <div> { new Date(task.dueDate).toLocaleString() } </div>
+                        <div> { new Date(task.dueDate).toLocaleDateString() } </div>
+                        <TaskActions projectId={project?.projectId} taskId={task.taskId} />
                     </div>
                 );
             }) }

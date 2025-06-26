@@ -1,10 +1,12 @@
-import { createHashRouter, RouterProvider } from 'react-router';
 import './App.css';
+import { createHashRouter, RouterProvider } from 'react-router';
+
 import ProjectList from './components/ProjectList';
 import TaskList from './components/TaskList';
 import TaskEntry from './components/TaskEntry';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { HydrateFallback } from './components/HydrateFallback';
+import { AddEditTaskForm } from './components/AddEditTaskForm';
 
 function App() {
     const router = createHashRouter([{
@@ -22,8 +24,17 @@ function App() {
         element: <TaskEntry />,
         errorElement: <ErrorBoundary />,
         hydrateFallbackElement: <HydrateFallback />
-    }
-    ]);
+    }, {
+        path: 'tasks/new',
+        element: <AddEditTaskForm />,
+        errorElement: <ErrorBoundary />,
+        hydrateFallbackElement: <HydrateFallback />
+    }, {
+        path: 'tasks/:id/:taskId/edit',
+        element: <AddEditTaskForm />,
+        errorElement: <ErrorBoundary />,
+        hydrateFallbackElement: <HydrateFallback />
+    }]);
     
     return (
         <RouterProvider router={router} />

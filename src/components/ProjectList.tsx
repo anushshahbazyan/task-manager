@@ -1,24 +1,23 @@
 import './ProjectList.css';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router";
-import fetchData from "../utils/fetchData";
 
-export type Project = {
-    projectId: string,
-    projectName: string,
-    dueDate: string,
-}
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { fetchProjects, selectAllProjects, selectProjectsError, selectProjectsStatus } from '../features/projects/projectsSlice';
+import type { Project } from '../types';
+import { HydrateFallback } from './HydrateFallback';
 
 export default function ProjectList() {
-    const [projects, setProjects] = useState<Project[]>([]);
+    const dispatch = useAppDispatch();
+    const projects = useAppSelector(selectAllProjects);
+    const projectStatus = useAppSelector(selectProjectsStatus);
+    const projectError = useAppSelector(selectProjectsError);
 
     useEffect(() => {
-        const doFetching = async () => {
-            const data = await fetchData('/src/resources/projects.json');
-            setProjects(data.projects || []);
+        if (projectStatus === 'idle') {
+            dispatch(fetchProjects());
         }
-        doFetching();
-    }, []);
+    }, [projectStatus, dispatch]);
 
     const saveProjectName = (project: Project) => {
         const projectItem = localStorage.getItem('project');
@@ -26,6 +25,19 @@ export default function ProjectList() {
             localStorage.setItem('project', JSON.stringify(project));
         }
     };
+
+    if (projectStatus === 'pending') {
+        return <HydrateFallback />;
+    }
+
+    if (projectError) {
+        return (
+            <div className='error-container'>
+                <h1>Error</h1>
+                <p>{projectError}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="container">
@@ -40,7 +52,7 @@ export default function ProjectList() {
                         <Link to={`/tasks/${project.projectId}`} onClick={() => saveProjectName(project)}>
                             <div> { project.projectName } </div>
                         </Link>
-                        <div> { new Date(project.dueDate).toLocaleString() } </div>
+                        <div> { new Date(project.dueDate).toLocaleDateString() } </div>
                     </div>
                 );
             }) }
