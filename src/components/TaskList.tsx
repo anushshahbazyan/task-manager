@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import type { Task, Project } from '../types';
 import TaskActions from './TaskActions';
 import { HydrateFallback } from './HydrateFallback';
+import ErrorComponent from './Error';
 
 export default function TaskList() {
     const [project, setProject] = useState<Project | null>(null);
@@ -41,10 +42,10 @@ export default function TaskList() {
 
     if (taskError) {
         return (
-            <div className='error-container'>
-                <h1>Error</h1>
-                <p>{taskError}</p>
-            </div>
+            <ErrorComponent
+                errorTitle='Error'
+                errorMessage={taskError}
+            />
         );
     }
 
@@ -56,12 +57,11 @@ export default function TaskList() {
                 <span>Add Task</span>
             </button>
             <div className="task-item">
-                <h2>Task Name</h2>
-                <h2>Description</h2>
-                <h2>Priority</h2>
-                <h2>Status</h2>
-                <h2>Due Date</h2>
-                <h2>Actions</h2>
+                <h3>Task Name</h3>
+                <h3>Description</h3>
+                <h3>Priority</h3>
+                <h3>Status</h3>
+                <h3>Due Date</h3>
             </div>
             { tasks.map((task: Task, index: number) => {
                 return (

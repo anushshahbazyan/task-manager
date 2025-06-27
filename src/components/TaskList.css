@@ -1,6 +1,7 @@
 .task-item {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 4px;
 }
 
 .add {
@@ -9,6 +10,12 @@
     align-items: center;
     color: white;
     width: 140px;
+}
+
+task-item .h3 {
+    @media (width < 768px) {
+        font-size: 14px !important;
+    }
 }
 
 .actions {

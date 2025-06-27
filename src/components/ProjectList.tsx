@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchProjects, selectAllProjects, selectProjectsError, selectProjectsStatus } from '../features/projects/projectsSlice';
 import type { Project } from '../types';
 import { HydrateFallback } from './HydrateFallback';
+import ErrorComponent from './Error';
 
 export default function ProjectList() {
     const dispatch = useAppDispatch();
@@ -32,10 +33,10 @@ export default function ProjectList() {
 
     if (projectError) {
         return (
-            <div className='error-container'>
-                <h1>Error</h1>
-                <p>{projectError}</p>
-            </div>
+            <ErrorComponent
+                errorTitle='Error'
+                errorMessage={projectError}
+            />
         );
     }
 
