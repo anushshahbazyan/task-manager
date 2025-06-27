@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
 import './AddEditTaskForm.css';
-import type { EditTaskFormElements } from '../types';
+import { Priority, Status, type EditTaskFormElements } from '../types';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { taskUpdated, selectTaskById, selectAllTasks, taskAdded } from '../features/tasks/tasksSlice';
 import createTaskId from '../utils/createTaskId';
@@ -57,15 +57,15 @@ export const AddEditTaskForm = () => {
                     <textarea id="taskDescription" name="taskDescription" defaultValue={task.description} required />
                     <label htmlFor="taskPriority">Task Priority</label>
                     <select id="taskPriority" name="taskPriority" defaultValue={task.priority} required>
-                        <option value='Low'>Low</option>
-                        <option value='Medium'>Medium</option>
-                        <option value='High'>High</option>
+                        <option value={Priority.LOW}>{Priority.LOW}</option>
+                        <option value={Priority.MEDIUM}>{Priority.MEDIUM}</option>
+                        <option value={Priority.HIGH}>{Priority.HIGH}</option>
                     </select>
                     <label htmlFor="taskStatus">Task Status</label>
                     <select id="taskStatus" name="taskStatus" defaultValue={task.status} required>
-                        <option value='To Do'>To Do</option>
-                        <option value='In Progress'>In Progress</option>
-                        <option value='Done'>Done</option>
+                        <option value={Status.TODO}>{Status.TODO}</option>
+                        <option value={Status.IN_PROGRESS}>{Status.IN_PROGRESS}</option>
+                        <option value={Status.DONE}>{Status.DONE}</option>
                     </select>
                     <label htmlFor="taskDueDate">Task Due Date</label>
                     <input type='date' id="taskDueDate" name="taskDueDate" defaultValue={task.dueDate} required />
