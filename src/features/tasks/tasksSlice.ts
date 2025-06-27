@@ -6,7 +6,7 @@ import fetchData from '../../utils/fetchData';
 import type { Task } from '../../types';
 
 export const fetchTasks = createAppAsyncThunk('tasks/fetchTasks', async () => {
-    const response = await fetchData('/src/resources/tasks.json');
+    const response = await fetchData('/resources/tasks.json');
     return response.tasks;
 });
 

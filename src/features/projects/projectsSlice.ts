@@ -5,7 +5,7 @@ import { createAppAsyncThunk } from '../../app/withTypes';
 import fetchData from '../../utils/fetchData';
 
 export const fetchProjects = createAppAsyncThunk('projects/fetchProjects', async () => {
-    const response = await fetchData('/src/resources/projects.json');
+    const response = await fetchData('/resources/projects.json');
     return response.projects;
 });
 
