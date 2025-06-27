@@ -49,7 +49,7 @@ export default function TaskList() {
     }
 
     return (
-        <div className="container">
+        <div className="container" data-testid='taskList'>
             <h1 className='title'>{`${project?.projectName}`} Project Tasks</h1>
             <button className='add' onClick={onAddTaskClicked}>
                 <PlusIcon width={16} height={16} color='#ffffff' />

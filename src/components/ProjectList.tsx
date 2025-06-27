@@ -40,7 +40,7 @@ export default function ProjectList() {
     }
 
     return (
-        <div className="container">
+        <div className="container" data-testid="projectListContainer">
             <h1 className='title'>Welcome to Task Manager</h1>
             <div className="project-item">
                 <h2>Project Name</h2>
